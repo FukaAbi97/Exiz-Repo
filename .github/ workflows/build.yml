@@ -29,8 +29,11 @@ jobs:
     distribution: "adopt"
     java-version: 21
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+- name: Set Java 17 (Workaround für SDK-Fehler)
+  run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))" >> $GITHUB_ENV
+
+- name: Setup Android SDK
+  uses: android-actions/setup-android@v2
 
       - name: Access Secrets for API tokens
         env:
