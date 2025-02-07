@@ -1,1 +1,41 @@
-1
+name: Build Cloudstream Plugin
+
+on:  
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository klonen
+        uses: actions/checkout@v3
+
+      - name: Java & Gradle installieren
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gradle Cache aktivieren
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Build ausführen
+        run: ./gradlew build
+
+      - name: `.cs3` Datei umbenennen
+        run: mv Plugins/BurningSeries/build/libs/*.jar Plugins/BurningSeries/BurningSeries.cs3
+
+      - name: Artefakte hochladen
+        uses: actions/upload-artifact@v3
+        with:
+          name: BurningSeries.cs3
+          path: Plugins/BurningSeries/BurningSeries.cs3
