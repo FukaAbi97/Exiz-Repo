@@ -39,19 +39,20 @@ jobs:
       - name: Install Android SDK
         run: |
           echo "Setting up Android SDK"
-          # Install Android Command Line Tools (SDK)
+          # Install Android Command Line Tools
           sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
-          sudo curl -sS -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+          sudo curl -sS -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
           sudo unzip -q sdk-tools.zip -d /usr/local/lib/android/sdk/cmdline-tools/latest
           sudo rm sdk-tools.zip
-          
-          # Set Environment variables for Android SDK
-          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH" >> $GITHUB_ENV
+
+          # Set Environment variables
+          echo "export ANDROID_HOME=/usr/local/lib/android/sdk" >> $HOME/.bashrc
+          echo "export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $HOME/.bashrc
+          echo "export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH" >> $HOME/.bashrc
+          source $HOME/.bashrc
 
           # Install required SDK components
-          sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+          yes | sdkmanager --licenses
           sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-31" "build-tools;31.0.0"
           
       - name: Build Streamcloud APK
