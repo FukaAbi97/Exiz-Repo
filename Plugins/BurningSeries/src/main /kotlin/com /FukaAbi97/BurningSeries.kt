@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
 open class BurningSeries : MainAPI() {
-    override var mainUrl = "https://burningseries.to"
+    override var mainUrl = "https://burningseries.io"
     override var name = "BurningSeries"
     override val hasMainPage = true
     override var lang = "de"
