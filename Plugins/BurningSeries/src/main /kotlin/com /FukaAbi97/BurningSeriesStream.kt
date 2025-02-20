@@ -4,7 +4,7 @@ import com.lagradost.cloudstream3.LoadResponse
 import com.lagradost.cloudstream3.TvType
 
 class BurningSeriesStream : BurningSeries() {
-    override var mainUrl = "https://burningseries.to"
+    override var mainUrl = "https://burningseries.io"
     override var name = "BurningSeries"
     override val supportedTypes = setOf(
         TvType.Movie,
